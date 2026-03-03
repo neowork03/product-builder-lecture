@@ -1,7 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const numbersContainer = document.getElementById('numbers-container');
     const generateButton = document.getElementById('generate-button');
+    const themeButton = document.getElementById('theme-button');
+    const body = document.body;
 
+    // Theme Toggle
+    themeButton.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        const isLightMode = body.classList.contains('light-mode');
+        themeButton.textContent = isLightMode ? '🌙 다크 모드' : '🌓 테마 변경';
+    });
+
+    // Generate Lotto Numbers
     generateButton.addEventListener('click', () => {
         generateLottoNumbers();
     });

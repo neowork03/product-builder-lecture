@@ -1,23 +1,67 @@
+:root {
+    --bg-color: #2C3E50;
+    --text-color: #ECF0F1;
+    --container-bg: transparent;
+    --button-bg: #3498DB;
+    --button-hover: #2980B9;
+    --dot-color: rgba(255, 255, 255, 0.05);
+    --form-input-bg: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode {
+    --bg-color: #F8F9FA;
+    --text-color: #2C3E50;
+    --dot-color: rgba(0, 0, 0, 0.05);
+    --form-input-bg: rgba(0, 0, 0, 0.05);
+}
+
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    background-color: #2C3E50;
-    color: #ECF0F1;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
     background-size: 20px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+#theme-button {
+    background: none;
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s;
+}
+
+#theme-button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 
 .container {
     text-align: center;
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
 }
 
 h1 {
     font-weight: 700;
     font-size: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 #numbers-container {
@@ -26,6 +70,7 @@ h1 {
     gap: 10px;
     margin-top: 30px;
     flex-wrap: wrap;
+    min-height: 80px;
 }
 
 .lotto-ball {
@@ -53,7 +98,7 @@ h1 {
     font-size: 1.2rem;
     font-weight: 700;
     color: white;
-    background-color: #3498DB;
+    background-color: var(--button-bg);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -62,41 +107,67 @@ h1 {
 }
 
 #generate-button:hover {
-    background-color: #2980B9;
+    background-color: var(--button-hover);
     box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
     transform: translateY(-2px);
 }
 
-#generate-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+.contact-section {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--dot-color);
+}
+
+.contact-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    padding: 12px;
+    border: 1px solid var(--dot-color);
+    border-radius: 8px;
+    background-color: var(--form-input-bg);
+    color: var(--text-color);
+    font-family: inherit;
+}
+
+.contact-form textarea {
+    height: 100px;
+    resize: none;
+}
+
+.contact-form button {
+    padding: 12px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: var(--button-hover);
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-/* Responsive Styles */
 @media (max-width: 600px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    .lotto-ball {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-
-    #generate-button {
-        padding: 12px 24px;
-        font-size: 1rem;
-    }
+    h1 { font-size: 2rem; }
+    .lotto-ball { width: 50px; height: 50px; font-size: 1.2rem; }
+    #generate-button { padding: 12px 24px; font-size: 1rem; }
 }
