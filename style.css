@@ -78,7 +78,7 @@ header p {
     border: 2px dashed var(--dot-color);
 }
 
-.start-button {
+.upload-button {
     padding: 15px 40px;
     font-size: 1.2rem;
     font-weight: 700;
@@ -91,7 +91,7 @@ header p {
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
-.start-button:hover {
+.upload-button:hover {
     background-color: var(--button-hover);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);

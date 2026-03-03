@@ -22,8 +22,11 @@
         </header>
         <main>
             <div id="upload-area" class="upload-area">
-                <button type="button" class="start-button" onclick="init()">테스트 시작하기 (카메라)</button>
-                <div id="webcam-container"></div>
+                <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="readURL(this);">
+                <button type="button" class="upload-button" onclick="document.getElementById('file-input').click();">이미지 업로드</button>
+                <div id="image-container">
+                    <img id="face-image" src="#" alt="your image" style="display: none; max-width: 100%; border-radius: 20px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </div>
                 <div id="label-container"></div>
             </div>
         </main>
