@@ -161,6 +161,13 @@ h1 {
     background-color: var(--button-hover);
 }
 
+.comment-section {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--dot-color);
+    text-align: left; /* Comments look better left-aligned */
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.5); }
     to { opacity: 1; transform: scale(1); }
