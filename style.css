@@ -1,1 +1,102 @@
-/* Add styles here */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #2C3E50;
+    color: #ECF0F1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+#numbers-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.lotto-ball {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    animation: fadeIn 0.5s ease-in-out;
+    transition: transform 0.2s;
+}
+
+.lotto-ball:hover {
+    transform: scale(1.1);
+}
+
+#generate-button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    background-color: #3498DB;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+#generate-button:hover {
+    background-color: #2980B9;
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+    transform: translateY(-2px);
+}
+
+#generate-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .lotto-ball {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    #generate-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+}
