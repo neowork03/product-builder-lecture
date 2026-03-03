@@ -1,45 +1,74 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const numbersContainer = document.getElementById('numbers-container');
-    const generateButton = document.getElementById('generate-button');
-    const themeButton = document.getElementById('theme-button');
-    const body = document.body;
+// Teachable Machine Model URL
+const URL = "https://teachablemachine.withgoogle.com/models/m6C8N2WlY/"; // Placeholder - please replace with your actual model URL
 
-    // Theme Toggle
-    themeButton.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        const isLightMode = body.classList.contains('light-mode');
-        themeButton.textContent = isLightMode ? '🌙 다크 모드' : '🌓 테마 변경';
-    });
+let model, webcam, labelContainer, maxPredictions;
 
-    // Generate Lotto Numbers
-    generateButton.addEventListener('click', () => {
-        generateLottoNumbers();
-    });
+// Load the image model and setup the webcam
+async function init() {
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
 
-    function generateLottoNumbers() {
-        numbersContainer.innerHTML = '';
-        const numbers = new Set();
-        while (numbers.size < 6) {
-            const randomNumber = Math.floor(Math.random() * 45) + 1;
-            numbers.add(randomNumber);
-        }
+    // load the model and metadata
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
 
-        const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
+    // Convenience function to setup a webcam
+    const flip = true; // whether to flip the webcam
+    webcam = new tmImage.Webcam(300, 300, flip); // width, height, flip
+    await webcam.setup(); // request access to the webcam
+    await webcam.play();
+    window.requestAnimationFrame(loop);
 
-        sortedNumbers.forEach(number => {
-            const ball = document.createElement('div');
-            ball.classList.add('lotto-ball');
-            ball.textContent = number;
-            ball.style.backgroundColor = getBallColor(number);
-            numbersContainer.appendChild(ball);
-        });
+    // append elements to the DOM
+    const webcamContainer = document.getElementById("webcam-container");
+    webcamContainer.innerHTML = ""; // Clear previous content
+    webcamContainer.appendChild(webcam.canvas);
+    
+    labelContainer = document.getElementById("label-container");
+    labelContainer.innerHTML = ""; // Clear previous content
+    for (let i = 0; i < maxPredictions; i++) { // and class labels
+        const div = document.createElement("div");
+        div.className = "prediction-label";
+        labelContainer.appendChild(div);
     }
 
-    function getBallColor(number) {
-        if (number <= 10) return '#F1C40F';
-        if (number <= 20) return '#3498DB';
-        if (number <= 30) return '#E74C3C';
-        if (number <= 40) return '#95A5A6';
-        return '#2ECC71';
+    // Hide start button
+    document.querySelector('.start-button').style.display = 'none';
+}
+
+async function loop() {
+    webcam.update(); // update the webcam frame
+    await predict();
+    window.requestAnimationFrame(loop);
+}
+
+// run the webcam image through the image model
+async function predict() {
+    const prediction = await model.predict(webcam.canvas);
+    for (let i = 0; i < maxPredictions; i++) {
+        const classPrediction =
+            prediction[i].className + ": " + (prediction[i].probability * 100).toFixed(0) + "%";
+        labelContainer.childNodes[i].innerHTML = classPrediction;
+        
+        // Dynamic styling for probability bars could be added here
+    }
+}
+
+// Theme Toggle Logic
+const themeButton = document.getElementById('theme-button');
+const body = document.body;
+
+// Check for saved theme
+if (localStorage.getItem('theme') === 'light') {
+    body.classList.add('light-mode');
+}
+
+themeButton.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    
+    if (body.classList.contains('light-mode')) {
+        localStorage.setItem('theme', 'light');
+    } else {
+        localStorage.setItem('theme', 'dark');
     }
 });
